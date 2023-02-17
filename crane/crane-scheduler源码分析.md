@@ -8,7 +8,7 @@ crane-scheduler 扩展了 k8s 原生调度器使其支持实时感知节点实�
 
 源码调用逻辑如下图所示
 
-![](images/crane-scheduler-controller流程图.png)
+![](../images/crane-scheduler-controller流程图.png)
 
 上图中存放 event 信息的 heap 是一个 BindingHeap 结构，该结构定义如下：
 
