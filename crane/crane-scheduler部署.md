@@ -76,6 +76,6 @@ spec:
     spec:
       containers:
         - name: nettools-deploy
-          image: 'registry.ztosys.com/base/network-multitool:lastet'
+          image: 'docker.io/gocrane/stress:latest'
       schedulerName: crane-scheduler
 ```
