@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inject-topology-spread
+  labels:
+    app: inject-topology-spread
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inject-topology-spread
+  template:
+    metadata:
+      labels:
+        app: inject-topology-spread
+    spec:
+      containers:
+        - name: inject-topology-spread
+          image: wenhuwang/inject-topology-spread:dev-202411131050
+          imagePullPolicy: Always
+          args:
+            - -tls-cert-file=/etc/webhook/certs/cert.pem
+            - -tls-key-file=/etc/webhook/certs/key.pem
+          volumeMounts:
+            - name: webhook-certs
+              mountPath: /etc/webhook/certs
+              readOnly: true
+      volumes:
+        - name: webhook-certs
+          secret:
+            secretName: inject-topology-spread-webhook-certs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inject-topology-spread-webhook
+  labels:
+    app: inject-topology-spread-webhook
+spec:
+  ports:
+  - port: 443
+    targetPort: 8080
+  selector:
+    app: inject-topology-spread
